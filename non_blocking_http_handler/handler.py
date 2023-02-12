@@ -6,13 +6,11 @@ from concurrent import futures
 
 
 class NonBlockingHttpHandler(logging.Handler):
-    def __init__(self, url: str, max_workers: int, max_retries: int = 0, extra: dict = None):
+    def __init__(self, url: str, max_workers: int, max_retries: int = 0, extra: dict = {}):
         self.url = url
         self.executor = futures.ThreadPoolExecutor(max_workers=max_workers)
         self.max_retries = max_retries
-
-        if extra:
-            self.extra = extra
+        self.extra = extra
 
         super().__init__()
 

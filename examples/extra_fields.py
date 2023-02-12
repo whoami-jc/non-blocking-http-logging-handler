@@ -1,11 +1,7 @@
 import logging
-import socket # for get hostname amd ip
+import socket  # for get hostname amd ip
 
 from non_blocking_http_handler.handler import NonBlockingHttpHandler
-
-
-log = logging.getLogger('test')
-
 
 httpHandler = NonBlockingHttpHandler(
     url='http://localhost:5000/logs',
@@ -16,8 +12,8 @@ httpHandler = NonBlockingHttpHandler(
     }
 )
 
-
-httpHandler.setLevel(logging.WARNING)
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)  # set level to DEBUG to see all logs
 log.addHandler(httpHandler)
 
 

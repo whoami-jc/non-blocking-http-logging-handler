@@ -2,22 +2,14 @@ import logging
 
 from non_blocking_http_handler.handler import NonBlockingHttpHandler
 
-
-log = logging.getLogger('test')
-
-
 httpHandler = NonBlockingHttpHandler(
     url='http://localhost:5000/logs',
-    max_workers=5,
-    max_retries=3,
-    extra={
-        'app': 'test',
-        'env': 'dev'
-    }
+    max_workers=10,
+    max_retries=3
 )
 
-
-httpHandler.setLevel(logging.WARNING)
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)  # set level to DEBUG to see all logs
 log.addHandler(httpHandler)
 
 
