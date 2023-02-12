@@ -6,10 +6,14 @@ from concurrent import futures
 
 
 class NonBlockingHttpHandler(logging.Handler):
-    def __init__(self, url: str, max_workers: int, max_retries: int = 0):
+    def __init__(self, url: str, max_workers: int, max_retries: int = 0, extra: dict = None):
         self.url = url
         self.executor = futures.ThreadPoolExecutor(max_workers=max_workers)
         self.max_retries = max_retries
+
+        if extra:
+            self.extra = extra
+
         super().__init__()
 
     def emit(self, record):
@@ -24,6 +28,9 @@ def custom_emit(self, record):
         'line': record.lineno,
         'file': record.filename,
     }
+
+    if self.extra:
+        req_body.update(self.extra)
 
     # encode json data
     json_data = json.dumps(req_body)
