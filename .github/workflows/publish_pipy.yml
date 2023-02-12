@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - horus_oag_sdk/**
+      - non_blocking_http_handler/**
       - VERSION
       - setup*
 
@@ -29,4 +29,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
-          password: ${{ secrets.pypi_password }}
+          password: ${{ secrets.pypi_token }}
