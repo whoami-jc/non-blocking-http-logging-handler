@@ -1,4 +1,4 @@
-# Non-Blocking-Http-logging-Handler
+# Non-Blocking-Http-Logging-Handler
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
