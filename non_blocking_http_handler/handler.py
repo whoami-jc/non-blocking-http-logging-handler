@@ -1,3 +1,4 @@
+import sys
 import json
 import logging
 
@@ -40,11 +41,26 @@ def custom_emit(self, record):
     req.add_header('Content-Type', 'application/json; charset=utf-8')
     req.add_header('Content-Length', len(json_data_b))
 
-    # make the request
-    response = request.urlopen(req, json_data_b)
+    try:
+        # make the request
+        response = request.urlopen(req, json_data_b)
+    except Exception as e:
+        print(f"Failed to send log to server {e}. Printing log data: {json_data}", flush=True, file=sys.stderr)
+        return
 
+    ok = True
     if response.status >= 400:
+        ok = False
         for retry in range(self.max_retries):
-            response = request.urlopen(req, json_data_b)
+            try:
+                response = request.urlopen(req, json_data_b)
+            except Exception as e:
+                print(f"Failed to send log to server {e}. Printing log data: {json_data}", flush=True, file=sys.stderr)
+                return
             if response.status < 400:
+                ok = True
                 break
+
+    if not ok:
+        print(f"Failed to send log to server {response.status}. Printing log data: {json_data}", flush=True,
+              file=sys.stderr)
